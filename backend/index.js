@@ -4,34 +4,19 @@ const express = require('express');
 
 const uuid = require('uuid');
 const app = express();
+const cors = require('cors');
 
 // app.use - represent the incoming HTTP request that consists of data like parameters, query strings, and also the request body
 // automatically parse incoming request bodies as JSON. When a request is made to the server with a JSON payload, this middleware will parse it and make the parsed data available in req.body
 
 app.use(express.json());
-
-// process.env.PORT ||
-const PORT = 5000;
+app.use(cors())
+const PORT = process.env.PORT || 5000;
 
 const todos = [
-    {
-        id: 1,
-        name: "Finish API build",
-        completed: "false"
-    },
-    {
-        id: 2,
-        name: "Apply to jobs",
-        completed: "false"
-    },
-    {
-        id: 3,
-        name: "Find my own place",
-        completed: "true"
-    },
+
 ]
 
-// app.Patch - used to update specific fields of a resource, unlike PUT, which replaces the entire resource.
 
 
 // app.get - route HTTP GET requests to the specified path, associating them with designated callback functions.
@@ -83,17 +68,15 @@ app.put('/todos/:id', (req, res) => {
 
 // app.delete - handle HTTP DELETE requests to a specified path.
 
-// app.delete('/todos/:id', (req, res) => {
-//     let index = todos.findIndex((todo) => todo.id == req.params.id)
-//     todos.splice(index, 1);
-//     res.json({ msg: "Delete Todo", data: todos })
-// })
+
 app.delete("/todos/:id", (req, res) => {
     let index = todos.findIndex((todo) => todo.id == req.params.id);
     todos.splice(index, 1);
     res.json(todos);
-  });
+});
 
 app.listen(PORT, () => {
     console.log(`Server Started at ${PORT}`)
 })
+
+// app.patch - used to update specific fields of a resource, unlike PUT, which replaces the entire resource.
